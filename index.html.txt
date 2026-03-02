@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نخبة الأولى - تسجيل الإدارة</title>
+    <style>
+        /* ========== الأنماط الأساسية بتدرجات الأخضر والليموني ========== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(145deg, #1a4f2e 0%, #7cb342 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 15px;
+        }
+
+        .container {
+            max-width: 950px;
+            width: 100%;
+            margin: auto;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(5px);
+            border-radius: 40px;
+            padding: 30px 25px;
+            box-shadow: 0 30px 60px rgba(0, 40, 20, 0.5);
+            border: 1px solid rgba(200, 240, 150, 0.5);
+        }
+
+        /* ========== الهيدر بتدرجات الليموني ========== */
+        .header {
+            background: linear-gradient(135deg, #2e7d32, #9ccc65);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: inset 0 -3px 10px rgba(0,0,0,0.2);
+            border: 2px solid #c5e1a5;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-shadow: 2px 2px 4px #1b5e20;
+        }
+
+        .header h1 span { font-size: 45px; }
+
+        .header p {
+            font-size: 20px;
+            opacity: 0.95;
+            background: rgba(255, 255, 255, 0.2);
+            display: inline-block;
+            padding: 8px 30px;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+            border: 1px solid #dcedc8;
+        }
+
+        /* ========== بطاقة موقع الشركة ========== */
+        .location-card {
+            background: #f1f8e9;
+            border-radius: 30px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 3px solid #aed581;
+            text-align: center;
+        }
+
+        .company-name {
+            background: #2e7d32;
+            color: white;
+            padding: 15px;
+            border-radius: 60px;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border: 3px solid #dcedc8;
+        }
+
+        .coords-box {
+            background: #1b5e20;
+            color: #fff;
+            padding: 15px;
+            border-radius: 60px;
+            font-family: 'Courier New', monospace;
+            font-size: 20px;
+            letter-spacing: 1px;
+            margin: 15px auto 10px;
+            display: inline-block;
+            direction: ltr;
+            border: 2px solid #c8e6c9;
+        }
+
+        .range-badge {
+            background: #fdd835;
+            color: #1b5e20;
+            font-weight: bold;
+            padding: 12px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 22px;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 0 #9e9d24;
+        }
+
+        /* ========== مؤشرات الحالة ========== */
+        .status-box {
+            padding: 18px;
+            border-radius: 60px;
+            margin: 20px 0;
+            font-weight: bold;
+            font-size: 22px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .status-info {
+            background: #dcedc8;
+            color: #1b5e20;
+            border: 3px solid #8bc34a;
+        }
+
+        .status-success {
+            background: linear-gradient(145deg, #c8e6c9, #a5d6a7);
+            color: #1b5e20;
+            border: 3px solid #2e7d32;
+        }
+
+        .status-error {
+            background: linear-gradient(145deg, #ffccbc, #ffab91);
+            color: #b71c1c;
+            border: 3px solid #d32f2f;
+        }
+
+        .distance-value {
+            font-size: 40px;
+            font-weight: 900;
+            background: #2e7d32;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 80px;
+            display: inline-block;
+            margin: 15px 0 20px;
+            box-shadow: 0 6px 0 #1b5e20;
+            border: 2px solid #dcedc8;
+        }
+
+        .check-btn {
+            background: linear-gradient(145deg, #7cb342, #9ccc65);
+            color: #1b5e20;
+            border: none;
+            padding: 18px 45px;
+            font-size: 26px;
+            font-weight: bold;
+            border-radius: 70px;
+            cursor: pointer;
+            margin: 15px 0 25px;
+            transition: 0.2s;
+            box-shadow: 0 8px 0 #558b2f;
+            width: auto;
+            min-width: 300px;
+            border: 2px solid #f1f8e9;
+        }
+
+        .check-btn:active {
+            transform: translateY(5px);
+            box-shadow: 0 3px 0 #558b2f;
+        }
+
+        .check-btn:disabled {
+            opacity: 0.6;
+            transform: none;
+            box-shadow: 0 5px 0 #558b2f;
+        }
+
+        /* ========== أزرار النماذج ========== */
+        .forms-section {
+            margin-top: 40px;
+            border-top: 4px dashed #a5d6a7;
+            padding-top: 30px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .action-btn {
+            border: none;
+            padding: 25px 25px;
+            font-size: 28px;
+            font-weight: bold;
+            border-radius: 80px;
+            cursor: pointer;
+            transition: 0.2s;
+            flex: 1;
+            min-width: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            box-shadow: 0 8px 0 #689f38;
+            border: 3px solid white;
+        }
+
+        .action-btn.attendance {
+            background: linear-gradient(145deg, #7cb342, #9ccc65);
+            color: #1b5e20;
+        }
+
+        .action-btn.departure {
+            background: linear-gradient(145deg, #fdd835, #fff176);
+            color: #33691e;
+        }
+
+        .action-btn.active {
+            transform: scale(1.05);
+            box-shadow: 0 0 0 5px white, 0 8px 0 #33691e;
+            border: 3px solid #fbc02d;
+        }
+
+        .action-btn:active {
+            transform: translateY(5px);
+            box-shadow: 0 3px 0 #558b2f;
+        }
+
+        /* ========== iframe ========== */
+        .iframe-container {
+            background: #f1f8e9;
+            border-radius: 40px;
+            padding: 20px;
+            margin-top: 15px;
+            border: 3px solid #aed581;
+        }
+
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 30px;
+            background: white;
+            box-shadow: inset 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .refresh-btn {
+            background: #558b2f;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 20px;
+            margin: 20px 0 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 2px solid #dcedc8;
+        }
+
+        .refresh-btn:hover {
+            background: #33691e;
+            transform: scale(1.05);
+        }
+
+        .hidden { display: none; }
+
+        .debug-info {
+            font-size: 14px;
+            color: #2e7d32;
+            margin-top: 20px;
+            background: #f1f8e9;
+            padding: 12px;
+            border-radius: 30px;
+            direction: ltr;
+            border: 2px solid #c5e1a5;
+        }
+
+        /* ========== تصميم متجاوب ========== */
+        @media (max-width: 600px) {
+            .header h1 { font-size: 28px; }
+            .company-name { font-size: 22px; }
+            .action-btn { font-size: 22px; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <!-- الهيدر الأخضر -->
+            <div class="header">
+                <h1>
+                    <span>🌿</span> شركة النخبة الأولى <span>🍋</span>
+                </h1>
+                <p>نظام تسجيل الحضور والانصراف - الإدارة</p>
+            </div>
+
+            <!-- معلومات موقع المكتب -->
+            <div class="location-card">
+                <div class="company-name">
+                    📍 مكتب الإدارة - النخبة الأولى
+                </div>
+                <div class="coords-box">
+                    24.6428056, 46.7965833
+                </div>
+                <div style="margin: 20px 0 10px;">
+                    <span class="range-badge">
+                        ⚡ النطاق المسموح: 15 متر
+                    </span>
+                </div>
+                <p style="color: #1b5e20; font-size: 16px; margin-top: 10px;">
+                    <span>✅</span> متاح فقط داخل مقر الشركة
+                </p>
+            </div>
+
+            <!-- منطقة الحالة -->
+            <div id="statusMessage" class="status-box status-info">
+                ⏳ جاري تحديد موقعك الجغرافي...
+            </div>
+            <div id="distanceDisplay" class="distance-value">--</div>
+
+            <!-- زر التحقق -->
+            <div>
+                <button class="check-btn" onclick="checkLocation()" id="checkBtn">
+                    🔍 تحقق من موقعي
+                </button>
+            </div>
+
+            <!-- نماذج الحضور والانصراف للإدارة -->
+            <div id="formsSection" class="forms-section hidden">
+                <div class="action-buttons">
+                    <button id="btnAttendance" class="action-btn attendance active" onclick="showForm('attendance')">
+                        <span>✅</span> تسجيل حضور
+                    </button>
+                    <button id="btnDeparture" class="action-btn departure" onclick="showForm('departure')">
+                        <span>🚶</span> تسجيل انصراف
+                    </button>
+                </div>
+
+                <!-- إطار الحضور (الإدارة) -->
+                <div id="formAttendance" class="iframe-container">
+                    <iframe id="attendanceIframe"
+                        src="https://docs.google.com/forms/d/e/1FAIpQLSdsyu-SHIgxkP7UMZKHHVy_OfTb5_wHm6e26EuORkY91PkpMA/viewform?embedded=true"
+                        allow="geolocation">
+                    </iframe>
+                </div>
+
+                <!-- إطار الانصراف (الإدارة) -->
+                <div id="formDeparture" class="iframe-container hidden">
+                    <iframe id="departureIframe"
+                        src="https://docs.google.com/forms/d/e/1FAIpQLSdUoZ6BaiPqZpnkKVOT_3VHvl-i9tI3CBRzo2tMGGVzZ9kSHQ/viewform?embedded=true"
+                        allow="geolocation">
+                    </iframe>
+                </div>
+
+                <button class="refresh-btn" onclick="refreshCurrentForm()">
+                    🔄 تحديث النموذج
+                </button>
+            </div>
+
+            <!-- معلومات تصحيح للمطور -->
+            <div id="debugInfo" class="debug-info"></div>
+        </div>
+    </div>
+
+    <script>
+        // -------------------- إعدادات شركة النخبة الأولى --------------------
+        const TARGET_LOCATION = {
+            name: "مكتب الإدارة - النخبة الأولى",
+            lat: 24.6428056,
+            lng: 46.7965833
+        };
+
+        const MAX_DISTANCE = 15; // 15 متر
+
+        const FORM_LINKS = {
+            attendance: "https://docs.google.com/forms/d/e/1FAIpQLSdsyu-SHIgxkP7UMZKHHVy_OfTb5_wHm6e26EuORkY91PkpMA/viewform",
+            departure: "https://docs.google.com/forms/d/e/1FAIpQLSdUoZ6BaiPqZpnkKVOT_3VHvl-i9tI3CBRzo2tMGGVzZ9kSHQ/viewform"
+        };
+
+        let currentFormType = 'attendance';
+
+        // -------------------- دالة حساب المسافة --------------------
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371e3;
+            const φ1 = lat1 * Math.PI/180;
+            const φ2 = lat2 * Math.PI/180;
+            const Δφ = (lat2 - lat1) * Math.PI/180;
+            const Δλ = (lon2 - lon1) * Math.PI/180;
+
+            const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+                    Math.cos(φ1) * Math.cos(φ2) *
+                    Math.sin(Δλ/2) * Math.sin(Δλ/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+            return R * c;
+        }
+
+        // -------------------- التبديل بين النماذج --------------------
+        window.showForm = function(type) {
+            currentFormType = type;
+
+            document.getElementById('btnAttendance').classList.remove('active');
+            document.getElementById('btnDeparture').classList.remove('active');
+            document.getElementById(`btn${type.charAt(0).toUpperCase() + type.slice(1)}`).classList.add('active');
+
+            document.getElementById('formAttendance').classList.add('hidden');
+            document.getElementById('formDeparture').classList.add('hidden');
+            document.getElementById(`form${type.charAt(0).toUpperCase() + type.slice(1)}`).classList.remove('hidden');
+        };
+
+        // -------------------- تحديث النموذج الحالي --------------------
+        window.refreshCurrentForm = function() {
+            const iframeId = currentFormType === 'attendance' ? 'attendanceIframe' : 'departureIframe';
+            const iframe = document.getElementById(iframeId);
+            iframe.src = iframe.src;
+        };
+
+        // -------------------- التحقق من الموقع --------------------
+        window.checkLocation = function() {
+            const statusEl = document.getElementById('statusMessage');
+            const distanceEl = document.getElementById('distanceDisplay');
+            const formsSection = document.getElementById('formsSection');
+            const checkBtn = document.getElementById('checkBtn');
+            const debugEl = document.getElementById('debugInfo');
+
+            statusEl.className = 'status-box status-info';
+            statusEl.textContent = '⏳ جاري تحديد موقعك الجغرافي...';
+            checkBtn.disabled = true;
+            formsSection.classList.add('hidden');
+
+            if (!navigator.geolocation) {
+                statusEl.className = 'status-box status-error';
+                statusEl.textContent = '❌ متصفحك لا يدعم خاصية تحديد الموقع';
+                checkBtn.disabled = false;
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const userLat = position.coords.latitude;
+                    const userLng = position.coords.longitude;
+                    const accuracy = position.coords.accuracy;
+
+                    // حساب المسافة من مكتب الإدارة
+                    const distance = calculateDistance(
+                        userLat, userLng,
+                        TARGET_LOCATION.lat, TARGET_LOCATION.lng
+                    );
+
+                    debugEl.innerHTML = `
+                        📍 موقعك: (${userLat.toFixed(6)}, ${userLng.toFixed(6)})<br>
+                        🎯 الدقة: ±${Math.round(accuracy)}م<br>
+                        🏢 المسافة من المكتب: ${Math.round(distance)}م
+                    `;
+
+                    if (distance < 1000) {
+                        distanceEl.textContent = `🏃 ${Math.round(distance)} متر`;
+                    } else {
+                        distanceEl.textContent = `🚗 ${(distance/1000).toFixed(2)} كم`;
+                    }
+
+                    if (distance <= MAX_DISTANCE) {
+                        statusEl.className = 'status-box status-success';
+                        statusEl.textContent = `✅ أنت داخل مقر الشركة (على بعد ${Math.round(distance)}م)`;
+                        formsSection.classList.remove('hidden');
+
+                        // إضافة معلومات التتبع للنماذج
+                        const attIframe = document.getElementById('attendanceIframe');
+                        const depIframe = document.getElementById('departureIframe');
+                        const trackParam = `&lat=${userLat.toFixed(6)}&lng=${userLng.toFixed(6)}&d=${Math.round(distance)}`;
+
+                        attIframe.src = `${FORM_LINKS.attendance}?embedded=true${trackParam}`;
+                        depIframe.src = `${FORM_LINKS.departure}?embedded=true${trackParam}`;
+
+                    } else {
+                        statusEl.className = 'status-box status-error';
+                        statusEl.textContent = `❌ أنت خارج مقر الشركة! المسافة: ${Math.round(distance)}م`;
+                        formsSection.classList.add('hidden');
+                    }
+
+                    checkBtn.disabled = false;
+                },
+                (error) => {
+                    let msg = '';
+                    if (error.code === 1) msg = '❌ تم رفض الإذن. سماح بالموقع ضروري.';
+                    else if (error.code === 2) msg = '❌ الموقع غير متوفر حالياً.';
+                    else if (error.code === 3) msg = '❌ انتهت المهلة. حاول مجدداً.';
+                    else msg = '❌ خطأ غير معروف.';
+
+                    statusEl.className = 'status-box status-error';
+                    statusEl.textContent = msg;
+                    distanceEl.textContent = '--';
+                    formsSection.classList.add('hidden');
+                    checkBtn.disabled = false;
+                    debugEl.innerHTML = `⚠️ ${error.message}`;
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 12000,
+                    maximumAge: 0
+                }
+            );
+        };
+
+        // -------------------- التشغيل التلقائي --------------------
+        window.onload = function() {
+            checkLocation();
+        };
+
+        window.addEventListener('focus', function() {
+            setTimeout(checkLocation, 500);
+        });
+    </script>
+</body>
+</html>
